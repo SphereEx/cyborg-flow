@@ -1,6 +1,18 @@
 # Compiled class file
 *.class
 
+# eclipse ignore
+.settings/
+.project
+.classpath
+.factorypath
+
+# idea ignore
+.idea/
+*.ipr
+*.iml
+*.iws
+
 # Log file
 *.log
 
