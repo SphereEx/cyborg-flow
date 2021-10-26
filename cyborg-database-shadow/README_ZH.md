@@ -53,8 +53,12 @@ INSERT INTO table (column,…) VALUES (value,…);
 会在生产库执行.
 
 ```sql
-INSERT INTO table (column,…) VALUES (value,…);
+INSERT INTO table (column,…) VALUES (value,…)/*cyborg-flow:true*/;
 ```
 会在影子库执行.
 
 如果需要了解更多的信息，请参阅 [ShardingSphere-shadow](https://shardingsphere.apache.org/document/current/cn/reference/shadow/)
+
+## 使用规范
+
+SQL 支持情况，请参阅 [ShardingSphere-shadow 使用规范](https://shardingsphere.apache.org/document/current/cn/features/shadow/use-norms/)
