@@ -53,8 +53,12 @@ INSERT INTO table (column,…) VALUES (value,…);
 will be executed to the production DB.
 
 ```sql
-INSERT INTO table (column,…) VALUES (value,…);
+INSERT INTO table (column,…) VALUES (value,…)/*cyborg-flow:true*/;
 ```
 will be executed to the shadow DB.
 
 Please refer to  [ShardingSphere-shadow](https://shardingsphere.apache.org/document/current/en/reference/shadow/), if you want learn more.
+
+## Use Norms
+
+SQL support，please refer to [ShardingSphere-shadow use-norms](https://shardingsphere.apache.org/document/current/en/features/shadow/use-norms/)
