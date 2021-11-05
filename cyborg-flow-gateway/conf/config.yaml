@@ -33,3 +33,13 @@
 apisix:
   config_center: yaml
   enable_admin: false
+
+plugins:
+  - proxy-rewrite
+  - skywalking
+
+plugin_attr:
+  skywalking:
+    service_name: APISIX
+    service_instance_name: "APISIX Instance Name"
+    endpoint_addr: http://${skywalking_endpoint}:12800
