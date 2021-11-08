@@ -1,2 +1,10 @@
 # CyborgFlow
-A synthetic monitoring solution to do stress test online through your service calls and databases. 
+<img src="assets/cyborg-flow-logo.png" alt="Sky Walking logo" height="90px" align="right" />
+
+CyborgFlow provides an out-of-box solution to do load test on your online system, powered by Apache APISIX, Apache SkyWalking and Apache ShardingSphere.
+
+
+
+
+# License
+Apache 2.0
