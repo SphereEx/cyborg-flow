@@ -2,31 +2,17 @@
 
 ## Quick Start
 
-#### Download
+#### Download&Install
 
-```shell
-git clone https://github.com/apache/shardingsphere
-```
-
-#### Make&Install
-
-> %SHARDINGSPHERE_PROXY_HOME% is the shardingsphere proxy extract path. for example: /Users/ss/shardingsphere-proxy-bin/
-
-```shell
-./mvnw clean install -Dmaven.javadoc.skip=true -B -Drat.skip=true -Djacoco.skip=true -Dmaven.test.skip=true -T1C -Prelease
-
-cd shardingsphere-distribution/ shardingsphere-proxy-distribution/target
-
-tar zxvf apache-shardingsphere-{version}-SNAPSHOT-shardingsphere-proxy-bin.tar.gz -C  %SHARDINGSPHERE_PROXY_HOME%/
-```
+Please head to the [releases page](https://www.apache.org/dyn/closer.cgi/shardingsphere/5.0.0/apache-shardingsphere-5.0.0-shardingsphere-proxy-bin.tar.gz) to download 5.0.0 release of Apache ShardingSphere.
 
 #### Configuration
 
-The `conf` directory contains the default template configuration files `config-shadow.yaml` and `server.yaml`. 
+The `conf` directory contains the template configuration files by default `config-shadow.yaml` and `server.yaml`. 
 
-If the default template configuration files meet your business needs, replace the corresponding configuration file.
+If the template configuration files by default meet your business needs, replace the corresponding configuration file.
 
-Please refer to [ShardingSphere-Proxy Configuration Manual](https://shardingsphere.apache.org/document/current/en/user-manual/shardingsphere-proxy/configuration/), if you want learn more.
+Please refer to [ShardingSphere-Proxy Configuration Manual](https://shardingsphere.apache.org/document/5.0.0/en/user-manual/shardingsphere-proxy/configuration/), if you want to learn more.
 
 #### Dependencies
 
@@ -41,7 +27,7 @@ sh %SHARDINGSPHERE_PROXY_HOME%/bin/start.sh
 ```
 > Default port is 3307.
 
-Please refer to [ShardingSphere-Proxy Start Server](https://shardingsphere.apache.org/document/current/en/quick-start/shardingsphere-proxy-quick-start/#3-start-server), if you want learn more.
+Please refer to [ShardingSphere-Proxy Start Server](https://shardingsphere.apache.org/document/5.0.0/en/quick-start/shardingsphere-proxy-quick-start/#3-start-server), if you want learn more.
 
 ## Use Example
 
@@ -57,8 +43,8 @@ INSERT INTO table (column,…) VALUES (value,…)/*cyborg-flow:true*/;
 ```
 will be executed to the shadow DB.
 
-Please refer to  [ShardingSphere-shadow](https://shardingsphere.apache.org/document/current/en/reference/shadow/), if you want learn more.
+Please refer to  [ShardingSphere-shadow](https://shardingsphere.apache.org/document/5.0.0/en/reference/shadow/), if you want to learn more.
 
 ## Use Norms
 
-SQL support，please refer to [ShardingSphere-shadow use-norms](https://shardingsphere.apache.org/document/current/en/features/shadow/use-norms/)
+SQL support，please refer to [ShardingSphere-shadow use-norms](https://shardingsphere.apache.org/document/5.0.0/en/features/shadow/use-norms/)
