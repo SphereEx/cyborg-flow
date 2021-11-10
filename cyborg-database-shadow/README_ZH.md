@@ -2,23 +2,9 @@
 
 ## 快速开始
 
-#### 下载
+#### 下载&安装
 
-```shell
-git clone https://github.com/apache/shardingsphere
-```
-
-#### 编译&安装
-
-> %SHARDINGSPHERE_PROXY_HOME% 为 Proxy 解压后的路径，例：/Users/ss/shardingsphere-proxy-bin/
-
-```shell
-./mvnw clean install -Dmaven.javadoc.skip=true -B -Drat.skip=true -Djacoco.skip=true -Dmaven.test.skip=true -T1C -Prelease
-
-cd shardingsphere-distribution/ shardingsphere-proxy-distribution/target
-
-tar zxvf apache-shardingsphere-{version}-SNAPSHOT-shardingsphere-proxy-bin.tar.gz -C  %SHARDINGSPHERE_PROXY_HOME%/
-```
+请前往 [发布页面](https://www.apache.org/dyn/closer.cgi/shardingsphere/5.0.0/apache-shardingsphere-5.0.0-shardingsphere-proxy-bin.tar.gz) 下载 Apache ShardingSphere 5.0.0 版本。
 
 #### 配置
 
@@ -26,7 +12,7 @@ tar zxvf apache-shardingsphere-{version}-SNAPSHOT-shardingsphere-proxy-bin.tar.g
 
 如果默认模板配置文件满足您的业务需求，请更换相应的配置文件。
 
-如果需要了解更多的信息，请参阅 [ShardingSphere-Proxy Configuration Manual](https://shardingsphere.apache.org/document/current/cn/user-manual/shardingsphere-proxy/configuration/)
+如果需要了解更多的信息，请参阅 [ShardingSphere-Proxy Configuration Manual](https://shardingsphere.apache.org/document/5.0.0/cn/user-manual/shardingsphere-proxy/configuration/)
 
 #### 依赖
 
@@ -41,7 +27,7 @@ sh %SHARDINGSPHERE_PROXY_HOME%/bin/start.sh
 ```
 > 默认启动端口为： `3307`
 
-如果需要了解更多的信息，请参阅 [ShardingSphere-Proxy Start Server](https://shardingsphere.apache.org/document/current/cn/quick-start/shardingsphere-proxy-quick-start/#3-start-server)
+如果需要了解更多的信息，请参阅 [ShardingSphere-Proxy Start Server](https://shardingsphere.apache.org/document/5.0.0/cn/quick-start/shardingsphere-proxy-quick-start/#3-start-server)
 
 ## 使用样例
 
@@ -57,8 +43,8 @@ INSERT INTO table (column,…) VALUES (value,…)/*cyborg-flow:true*/;
 ```
 会在影子库执行.
 
-如果需要了解更多的信息，请参阅 [ShardingSphere-shadow](https://shardingsphere.apache.org/document/current/cn/reference/shadow/)
+如果需要了解更多的信息，请参阅 [ShardingSphere-shadow](https://shardingsphere.apache.org/document/5.0.0/cn/reference/shadow/)
 
 ## 使用规范
 
-SQL 支持情况，请参阅 [ShardingSphere-shadow 使用规范](https://shardingsphere.apache.org/document/current/cn/features/shadow/use-norms/)
+SQL 支持情况，请参阅 [ShardingSphere-shadow 使用规范](https://shardingsphere.apache.org/document/5.0.0/cn/features/shadow/use-norms/)
