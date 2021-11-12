@@ -1,0 +1,127 @@
+# Licensed to the Apache Software Foundation (ASF) under one or more
+# contributor license agreements.  See the NOTICE file distributed with
+# this work for additional information regarding copyright ownership.
+# The ASF licenses this file to You under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with
+# the License.  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# UI templates initialized file includes the default template when the SkyWalking OAP starts up at the first time.
+#
+# Also, SkyWalking would detect the existing templates in the database, once they are missing, all templates in this file
+# could be added automatically.
+
+templates:
+  - name: Cyborg Flow
+    type: "DASHBOARD"
+    configuration: |-
+      [
+        {
+          "name": "Cyborg Flow",
+          "type": "service",
+          "children": [{
+            "name": "service",
+            "children": [{
+              "width": 3,
+              "title": "Normal CPM",
+              "height": 350,
+              "entityType": "Service",
+              "independentSelector": false,
+              "metricType": "REGULAR_VALUE",
+              "metricName": "cyborg_flow_normal_service_cpm",
+              "queryMetricType": "readMetricsValues",
+              "chartType": "ChartLine"
+            }, {
+              "width": 3,
+              "title": "Normal SLA",
+              "height": 350,
+              "entityType": "Service",
+              "independentSelector": false,
+              "metricType": "REGULAR_VALUE",
+              "metricName": "cyborg_flow_normal_service_sla",
+              "queryMetricType": "readMetricsValues",
+              "chartType": "ChartLine",
+              "aggregation": "/",
+              "aggregationNum": "100"
+            }, {
+              "width": 3,
+              "title": "Cyborg CPM",
+              "height": 350,
+              "entityType": "Service",
+              "independentSelector": false,
+              "metricType": "REGULAR_VALUE",
+              "metricName": "cyborg_flow_generate_service_cpm",
+              "queryMetricType": "readMetricsValues",
+              "chartType": "ChartLine"
+            }, {
+              "width": 3,
+              "title": "Cyborg SLA",
+              "height": 350,
+              "entityType": "Service",
+              "independentSelector": false,
+              "metricType": "REGULAR_VALUE",
+              "metricName": "cyborg_flow_generate_service_sla",
+              "queryMetricType": "readMetricsValues",
+              "chartType": "ChartLine",
+              "aggregation": "/",
+              "aggregationNum": "100"
+            }, {
+              "width": 3,
+              "title": "Normal Response Latency",
+              "height": 350,
+              "entityType": "Service",
+              "independentSelector": false,
+              "metricType": "LABELED_VALUE",
+              "metricName": "cyborg_flow_normal_service_percentile",
+              "queryMetricType": "readLabeledMetricsValues",
+              "chartType": "ChartLine",
+              "metricLabels": "P50, P75, P90, P95, P99",
+              "labelsIndex": "0,1,2,3,4"
+            }, {
+              "width": 3,
+              "title": "Normal Heatmap",
+              "height": 350,
+              "entityType": "Service",
+              "independentSelector": false,
+              "metricType": "HEATMAP",
+              "metricName": "cyborg_flow_normal_service_heatmap",
+              "queryMetricType": "readHeatMap",
+              "chartType": "ChartHeatmap"
+            }, {
+              "width": 3,
+              "title": "Cyborg Response Latency",
+              "height": 350,
+              "entityType": "Service",
+              "independentSelector": false,
+              "metricType": "LABELED_VALUE",
+              "metricName": "cyborg_flow_generate_service_percentile",
+              "queryMetricType": "readLabeledMetricsValues",
+              "chartType": "ChartLine",
+              "metricLabels": "P50, P75, P90, P95, P99",
+              "labelsIndex": "0,1,2,3,4"
+            }, {
+              "width": 3,
+              "title": "Cyborg Heatmap",
+              "height": 350,
+              "entityType": "Service",
+              "independentSelector": false,
+              "metricType": "HEATMAP",
+              "metricName": "cyborg_flow_generate_service_heatmap",
+              "queryMetricType": "readHeatMap",
+              "chartType": "ChartHeatmap"
+            }]
+          }]
+        }
+      ]
+    # Activated as the DASHBOARD type, makes this templates added into the UI page automatically.
+    # False means providing a basic template, user needs to add it manually.
+    activated: true
+    # True means wouldn't show up on the dashboard. Only keeps the definition in the storage.
+    disabled: false

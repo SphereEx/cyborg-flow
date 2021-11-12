@@ -17,19 +17,21 @@
 
 SHELL := /bin/bash -o pipefail
 
-CYBORG_AGENT_ROOT := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
-CYBORG_AGENT_TAR := cyborg-agent.tar.gz
-CYBORG_UPSTREAM_REPO ?= https://github.com/apache/skywalking-java.git
-CYBORG_UPSTREAM_HEAD ?= a7a4faabb158ea8322170e3c7cae0210a8c4e7b4
-
-.PHONY: build
-build:
-	cd plugins && ./mvnw --batch-mode clean package -Dmaven.test.skip=true
+CYBORG_DASHBOARD_ROOT := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
+CYBORG_DASHBOARD_TAR := cyborg-dashboard.tar.gz
+CYBORG_UPSTREAM_REPO ?= https://github.com/apache/skywalking.git
+CYBORG_UPSTREAM_HEAD ?= 4284a57501eae6df49cb2703f31cc6f30d43367e
 
 .PHONY: replace
-replace: build
-	bash ./replace-plugins.sh $(path)
+replace:
+	bash ./replace-oap.sh $(path)
 
 .PHONY: release
 release:
-	bash ./release.sh $(CYBORG_UPSTREAM_REPO) $(CYBORG_UPSTREAM_HEAD) $(CYBORG_AGENT_ROOT)/$(CYBORG_AGENT_TAR)
+	bash ./release.sh $(CYBORG_UPSTREAM_REPO) $(CYBORG_UPSTREAM_HEAD) $(CYBORG_DASHBOARD_ROOT)/$(CYBORG_DASHBOARD_TAR)
+
+
+
+
+
+

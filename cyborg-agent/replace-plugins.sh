@@ -23,7 +23,7 @@ CYBORG_AGENT_DIR="$(cd "$(dirname $0)"; pwd)"
 AGENT_DIR="$(cd "$1"; pwd)"
 AGENT_BACKUP_DIR="$AGENT_DIR/plugins-backup"
 
-function replace() {
+function replace_plugin() {
   need_replace=$1
   new_plugins=$2
 
@@ -43,8 +43,57 @@ function replace() {
     done
 }
 
+function append_auto_tag() {
+  AGENT_CONF=$1
+  if [ ! -f $AGENT_CONF ]; then
+    echo "cannot append \"correlation.auto_tag_keys\", because agent.config file is not found"
+    return 1
+  fi
+
+  contains_key=false
+  while IFS='=' read -r key value
+  do
+    if [[ "$key" == "correlation.auto_tag_keys" ]]; then
+      contains_key=true
+    fi
+  done < "$AGENT_CONF"
+  if [[ "$contains_key" == false ]]; then
+    echo "correlation.auto_tag_keys=cyborg-flow" >> $AGENT_CONF
+    echo "append \"cyborg-flow\" to the correlation.auto_tag_keys."
+    return
+  fi
+
+  auto_tag_value=$(sed -n 's/^correlation.auto_tag_keys*=*//p' $AGENT_CONF)
+  auto_key_prefix=""
+  auto_key_exists_value=""
+  auto_key_suffix=""
+  if [[ "$auto_tag_value" == *"\${"* ]]; then
+    auto_key_prefix=$(echo $auto_tag_value | sed -r 's/^(\$\{.*\:).*\}$/\1/')
+    auto_key_exists_value=$(echo $auto_tag_value | sed -r 's/^.*\:(.*)\}$/\1/')
+    auto_key_suffix="}"
+  else
+    auto_key_exists_value=$auto_tag_value
+  fi
+
+  if [[ "$auto_key_exists_value" == *"cyborg-flow"* ]]; then
+    echo "already contains the \"cyborg-flow\" auto tag key, won't be add again"
+    return
+  fi
+
+  if [ "$auto_key_exists_value" != "" ]; then
+    auto_key_exists_value="${auto_key_exists_value},"
+  fi
+  replace="${auto_key_prefix}${auto_key_exists_value}cyborg-flow${auto_key_suffix}"
+  sed -i "s/^correlation.auto_tag_keys.*$/correlation.auto_tag_keys=$replace/g" $AGENT_CONF
+  echo "append \"cyborg-flow\" to the correlation.auto_tag_keys."
+}
+
 echo "ready for replace agent path: $AGENT_DIR"
 echo "backup agent path: $AGENT_BACKUP_DIR"
 mkdir -p $AGENT_BACKUP_DIR
 
-replace plugins/apm-mysql- cyborg-agent/plugins/cyborg-flow-mysql-
+# replace plugins
+replace_plugin plugins/apm-mysql- cyborg-agent/plugins/cyborg-flow-mysql-
+
+# append correlation.auto_tag_keys
+append_auto_tag $AGENT_DIR/config/agent.config

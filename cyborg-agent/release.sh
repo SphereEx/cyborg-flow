@@ -13,23 +13,28 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-# If the first argument is "run"...
 
-SHELL := /bin/bash -o pipefail
+CYBORG_AGENT="$(cd "$(dirname $0)"; pwd)"
+REPO=$1
+REPO_HEAD=$2
+DIST_FILE_PATH=$3
 
-CYBORG_AGENT_ROOT := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
-CYBORG_AGENT_TAR := cyborg-agent.tar.gz
-CYBORG_UPSTREAM_REPO ?= https://github.com/apache/skywalking-java.git
-CYBORG_UPSTREAM_HEAD ?= a7a4faabb158ea8322170e3c7cae0210a8c4e7b4
+cd $CYBORG_AGENT
 
-.PHONY: build
-build:
-	cd plugins && ./mvnw --batch-mode clean package -Dmaven.test.skip=true
+# build upstream
+git clone $REPO skywalking-java-agent
+cd skywalking-java-agent && git reset --hard $REPO_HEAD
+git submodule init && git submodule update
+SKIP_TEST=true make build
 
-.PHONY: replace
-replace: build
-	bash ./replace-plugins.sh $(path)
+# replace
+AGENT_HOME=$(cd skywalking-agent; pwd)
+cd $CYBORG_AGENT && make replace path=$AGENT_HOME
 
-.PHONY: release
-release:
-	bash ./release.sh $(CYBORG_UPSTREAM_REPO) $(CYBORG_UPSTREAM_HEAD) $(CYBORG_AGENT_ROOT)/$(CYBORG_AGENT_TAR)
+# build tar
+cd $(dirname $AGENT_HOME)
+mv $(basename $AGENT_HOME) cyborg-agent
+tar vczf $DIST_FILE_PATH cyborg-agent
+
+# cleanup upstream
+rm -rf $CYBORG_AGENT/skywalking-java-agent
