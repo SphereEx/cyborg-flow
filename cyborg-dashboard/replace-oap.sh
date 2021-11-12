@@ -13,23 +13,28 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-# If the first argument is "run"...
 
-SHELL := /bin/bash -o pipefail
+if [ "$1" == "" ]; then
+  echo "Please specify the root directory of SkyWalking APM"
+  exit 1
+fi
 
-CYBORG_AGENT_ROOT := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
-CYBORG_AGENT_TAR := cyborg-agent.tar.gz
-CYBORG_UPSTREAM_REPO ?= https://github.com/apache/skywalking-java.git
-CYBORG_UPSTREAM_HEAD ?= a7a4faabb158ea8322170e3c7cae0210a8c4e7b4
+CYBORG_DASHBOARD="$(cd "$(dirname $0)"; pwd)"
+APM_DIR="$(cd "$1"; pwd)"
 
-.PHONY: build
-build:
-	cd plugins && ./mvnw --batch-mode clean package -Dmaven.test.skip=true
+if [ ! -d "$APM_DIR/config/ui-initialized-templates" ] || [ ! -d "$APM_DIR/config/oal" ]; then
+  echo "Please make sure the SkyWalking APM directory is correct: $APM_DIR"
+  return 1
+fi
 
-.PHONY: replace
-replace: build
-	bash ./replace-plugins.sh $(path)
+cp $CYBORG_DASHBOARD/ui-template.yml $APM_DIR/config/ui-initialized-templates/cyborg-flow.yml
+echo "Copy UI template"
 
-.PHONY: release
-release:
-	bash ./release.sh $(CYBORG_UPSTREAM_REPO) $(CYBORG_UPSTREAM_HEAD) $(CYBORG_AGENT_ROOT)/$(CYBORG_AGENT_TAR)
+if [ -f "$APM_DIR/config/oal/core.oal" ]; then
+  echo "Detect official core.oal, make it to core.oal_backup"
+  mv "$APM_DIR/config/oal/core.oal" "$APM_DIR/config/oal/core.oal_backup"
+fi
+
+cp $CYBORG_DASHBOARD/core.oal $APM_DIR/config/oal/core.oal
+echo "Copy OAL"
+

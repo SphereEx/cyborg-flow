@@ -13,23 +13,28 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-# If the first argument is "run"...
 
-SHELL := /bin/bash -o pipefail
+CYBORG_DASHBOARD="$(cd "$(dirname $0)"; pwd)"
+REPO=$1
+REPO_HEAD=$2
+DIST_FILE_PATH=$3
 
-CYBORG_AGENT_ROOT := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
-CYBORG_AGENT_TAR := cyborg-agent.tar.gz
-CYBORG_UPSTREAM_REPO ?= https://github.com/apache/skywalking-java.git
-CYBORG_UPSTREAM_HEAD ?= a7a4faabb158ea8322170e3c7cae0210a8c4e7b4
+cd $CYBORG_DASHBOARD
 
-.PHONY: build
-build:
-	cd plugins && ./mvnw --batch-mode clean package -Dmaven.test.skip=true
+# build upstream
+git clone $REPO skywalking-apm
+cd skywalking-apm && git reset --hard $REPO_HEAD
+make init && SKIP_TEST=true make build.all
+cd dist && tar -zxvf apache-skywalking-apm-bin.tar.gz
 
-.PHONY: replace
-replace: build
-	bash ./replace-plugins.sh $(path)
+# replace
+OAP_HOME=$(cd apache-skywalking-apm-bin; pwd)
+make -C $CYBORG_DASHBOARD replace path=$OAP_HOME
 
-.PHONY: release
-release:
-	bash ./release.sh $(CYBORG_UPSTREAM_REPO) $(CYBORG_UPSTREAM_HEAD) $(CYBORG_AGENT_ROOT)/$(CYBORG_AGENT_TAR)
+# build tar
+cd $(dirname $OAP_HOME)
+mv $(basename $OAP_HOME) cyborg-dashboard
+tar vczf $DIST_FILE_PATH cyborg-dashboard
+
+# cleanup upstream
+rm -rf $CYBORG_DASHBOARD/skywalking-apm

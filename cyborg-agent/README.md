@@ -6,7 +6,7 @@
 
 2. Build `cyborg-agent` and replace plugins. The `SW_AGENT_HOME` should be the `skywalking-java` base directory.
     ```shell
-    make replace-plugin path=$(SW_AGENT_HOME)
+    make replace path=$(SW_AGENT_HOME)
     ```
 
 3. Start application with `skywalking-agent`, for more information please read the [official documentation](https://skywalking.apache.org/docs/#JavaAgent).
