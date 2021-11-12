@@ -21,20 +21,24 @@ fi
 
 CYBORG_DASHBOARD="$(cd "$(dirname $0)"; pwd)"
 APM_DIR="$(cd "$1"; pwd)"
+REMOVE_UPSTREAM_CONTENT=$2
 
 if [ ! -d "$APM_DIR/config/ui-initialized-templates" ] || [ ! -d "$APM_DIR/config/oal" ]; then
   echo "Please make sure the SkyWalking APM directory is correct: $APM_DIR"
   return 1
 fi
 
+if [[ "$REMOVE_UPSTREAM_CONTENT" == "true" ]]; then
+  rm -rf $APM_DIR/config/ui-initialized-templates/*
+fi
+
 cp $CYBORG_DASHBOARD/ui-template.yml $APM_DIR/config/ui-initialized-templates/cyborg-flow.yml
 echo "Copy UI template"
 
-if [ -f "$APM_DIR/config/oal/core.oal" ]; then
+if [ -f "$APM_DIR/config/oal/core.oal" ] && [[ "$REMOVE_UPSTREAM_CONTENT" != "true" ]]; then
   echo "Detect official core.oal, make it to core.oal_backup"
   mv "$APM_DIR/config/oal/core.oal" "$APM_DIR/config/oal/core.oal_backup"
 fi
 
 cp $CYBORG_DASHBOARD/core.oal $APM_DIR/config/oal/core.oal
 echo "Copy OAL"
-

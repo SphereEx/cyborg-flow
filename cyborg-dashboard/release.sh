@@ -29,7 +29,7 @@ cd dist && tar -zxvf apache-skywalking-apm-bin.tar.gz
 
 # replace
 OAP_HOME=$(cd apache-skywalking-apm-bin; pwd)
-make -C $CYBORG_DASHBOARD replace path=$OAP_HOME
+REMOVE_UPSTREAM_TEMPLATE=true make -C $CYBORG_DASHBOARD replace path=$OAP_HOME
 
 # build tar
 cd $(dirname $OAP_HOME)

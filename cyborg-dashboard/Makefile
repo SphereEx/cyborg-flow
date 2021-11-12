@@ -21,10 +21,11 @@ CYBORG_DASHBOARD_ROOT := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))
 CYBORG_DASHBOARD_TAR := cyborg-dashboard.tar.gz
 CYBORG_UPSTREAM_REPO ?= https://github.com/apache/skywalking.git
 CYBORG_UPSTREAM_HEAD ?= 4284a57501eae6df49cb2703f31cc6f30d43367e
+REMOVE_UPSTREAM_TEMPLATE ?= true
 
 .PHONY: replace
 replace:
-	bash ./replace-oap.sh $(path)
+	bash ./replace-oap.sh $(path) $(REMOVE_UPSTREAM_TEMPLATE)
 
 .PHONY: release
 release:
