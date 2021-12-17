@@ -5,7 +5,7 @@ CyborgFlow provides an out-of-the-box (OOTB) solution to perform load test on yo
 
 ## Quick Start
 
-### Download release package
+### Download Release Package
 
 Please download the package from the [release page](https://github.com/SphereEx/CyborgFlow/releases):
 
@@ -18,12 +18,12 @@ Please download the package from the [release page](https://github.com/SphereEx/
 
 1. Unpack the **cyborg-dashboard.tar.gz**.
 2. Follow [Backend Document](https://skywalking.apache.org/docs/main/latest/en/setup/backend/backend-setup/) to start the dashboard backend.
-3. Follow [UI Document](https://skywalking.apache.org/docs/main/latest/en/setup/backend/ui-setup/) to start the dashboard UI, then you could access via `http://localhost:8080`, but not exists any data for now, because the application not setup yet.
+3. Follow [UI Document](https://skywalking.apache.org/docs/main/latest/en/setup/backend/ui-setup/) to start the dashboard UI, and the you could access via `http://localhost:8080`. Please note that currently you won't find any data, as the application hasn't been setup yet.
 
 ### Setup Cyborg Agent
 
 1. Unpack the **cyborg-agent.tar.gz**.
-2. Follow [setup document](https://skywalking.apache.org/docs/skywalking-java/latest/en/setup/service-agent/java-agent/readme/) config the agent to your application and make the agent link to the Cyborg Dashboard backend.
+2. Follow [setup document](https://skywalking.apache.org/docs/skywalking-java/latest/en/setup/service-agent/java-agent/readme/) config the agent to your application, and make the agent link to the Cyborg Dashboard backend.
 3. Change the address of the linked database in your application to the Cyborg database shadow server address.
 4. Start your application.
 
